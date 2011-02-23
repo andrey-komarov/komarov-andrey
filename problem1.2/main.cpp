@@ -5,6 +5,7 @@ int main()
 {
 	std::ifstream in("in.txt");
 	std::ofstream out("out.txt");
+	out.width();
 	std::vector<double> x, y;
 
 	double x1, y1;
@@ -19,5 +20,5 @@ int main()
 		s += x[i] * y[(i + 1) % n] - x[(i + 1) % n] * y[i];
 	}
 	s = s > 0 ? s : -s;
-	out << s / 2;
+	out << std::fixed << s / 2;
 }
