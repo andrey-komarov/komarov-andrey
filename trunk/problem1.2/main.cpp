@@ -16,8 +16,7 @@ int main()
 	double s = 0;
 	for (int i = 0, n = x.size(); i < n; i++) 
 	{
-		s += x[i] * y[(i + 1) % n] - x[(i + 1) % n] * y[i];
+		s -= x[i] * y[(i + 1) % n] - x[(i + 1) % n] * y[i];
 	}
-	s = s > 0 ? s : -s;
 	out << std::fixed << s / 2;
 }
