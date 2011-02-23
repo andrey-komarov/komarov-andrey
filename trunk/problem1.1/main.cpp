@@ -9,7 +9,10 @@ int main()
 	std::ofstream out("out.txt");
 	int n;
 	in >> n;
-	int x = 0, y = 0, len = 0, state = 0;
+	int x = 0;
+	int y = 0;
+	int len = 0;
+	int state = 0;
 	for (int i = 0; i < n; i++)
 	{
 		out << x << ' ' << y << '\n';
