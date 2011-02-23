@@ -1,4 +1,4 @@
-Wrong Answer on test 06
+Accepted
 
-[Generated at February 23, 2011 10:09:19 PM GMT+03:00]
+[Generated at February 23, 2011 10:51:12 PM GMT+03:00]
 
