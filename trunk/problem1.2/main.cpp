@@ -5,7 +5,6 @@ int main()
 {
 	std::ifstream in("in.txt");
 	std::ofstream out("out.txt");
-	out.width();
 	std::vector<double> x, y;
 
 	double x1, y1;
