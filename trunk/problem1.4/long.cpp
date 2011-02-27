@@ -100,8 +100,11 @@ void longint::norm(vector<long long>& a, bool need_shorten = true) const
 			a[i] += base;
 			a[i + 1]--;
 		}
-		a[i + 1] += a[i] / base;
-		a[i] %= base;
+		if (a[i] > base)
+		{
+			a[i + 1] += a[i] / base;
+			a[i] %= base;
+		}	
 	}
 	while (need_shorten && a.back() == 0 && a.size() > 1) 
 		a.pop_back();
