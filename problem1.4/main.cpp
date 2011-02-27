@@ -12,7 +12,11 @@ int main()
 	{
 		if (b == zero)
 			out << "<error>\n\n\n";
-		else 
-			out << (a / b) << "\n" << (a % b) << "\n\n";
+		else
+		{
+			longint q = a / b;
+			longint r = a - q * b;
+			out << q << "\n" << r << "\n\n";
+		}
 	}
 }
