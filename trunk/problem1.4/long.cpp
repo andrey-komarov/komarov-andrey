@@ -169,6 +169,18 @@ longint longint::operator/(const longint& b) const
 	while (l + one < r)
 	{
 		longint c = (l + r) / 2;
+		size_t lenB = b.len;
+		size_t lenC = c.len;
+		if (lenB + lenC > len + 1)
+		{
+			r = c;
+			continue;
+		}
+		if (lenB + lenC + 1 < len)
+		{
+			l = c;
+			continue;
+		}
 		if (b * c > *this)
 			r = c;
 		else
