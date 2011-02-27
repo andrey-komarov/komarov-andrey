@@ -11,8 +11,8 @@ using std::ostream;
 using std::string;
 using std::max;
 
-const long long base = 1000000000;
-const int base_length = 9;
+const long long base = 100000000;
+const int base_length = 8;
 
 class longint
 {	

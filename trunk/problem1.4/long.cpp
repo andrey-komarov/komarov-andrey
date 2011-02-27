@@ -163,6 +163,10 @@ longint longint::operator/(const long long& b) const
 
 longint longint::operator/(const longint& b) const
 {
+	if (b.len == 1)
+		return *this / b.a[0];
+	if (b.len == 2)
+		return *this / (b.a[0] + base * b.a[1]);
 	longint l(0);
 	longint r = *this + longint(1);
 	longint one = 1;
