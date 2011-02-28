@@ -1,27 +1,24 @@
-#include <assert.h>
 #include <cstdlib>
-#include <vector>
 #include <string>
 #include <iostream>
 #include <algorithm>
 
-using std::vector;
 using std::istream;
 using std::ostream;
 using std::string;
 using std::max;
 
-const long long base = 100000000;
-const int base_length = 8;
+const long long base = 1000000000;
+const int base_length = 9;
 
 class longint
 {	
-	vector<long long> a;
+	long long* a;
 	size_t len;
 	
-	longint(vector<long long>& b);
+	longint(long long*& b, size_t len);
 	void norm();
-	void norm(vector<long long>& a, bool) const;
+	void norm(long long*& a, size_t&, bool) const;
 	long long operator[](int pos) const;
 	
 	public:
@@ -43,6 +40,7 @@ class longint
 	
 	friend istream& operator>>(istream&, longint&);
 	friend ostream& operator<<(ostream&, const longint&);
+	
 };
 
 #include "long.cpp"
