@@ -1,14 +1,14 @@
 longint::longint(int b)
 {
-	a.clear();
-	a.push_back(b);
-	norm();
+	a = new long long[1];
+	a[0] = b;
+	len = 1;
 }
 
-longint::longint(vector<long long>& b)
+longint::longint(long long*& b, size_t l)
 {
 	a = b;
-	len = a.size();
+	len = l;
 	norm();
 }
 
@@ -59,27 +59,29 @@ bool longint::operator!=(const longint& b) const
 	return !(*this == b);
 }
 
-
 istream& operator>>(istream& is, longint& val) 
 {
 	string s;
-	vector<long long> a;
+	long long* a;
 	if (!(is >> s))
 		return is >> s;
-	int n = s.size();
-	for (int i = n - 1; i >= 0; i -= base_length)
+	size_t n = s.size();
+	size_t m = (n - 1) / base_length + 1;
+	a = new long long[m];
+	for (int i = n - 1, j = 0; i >= 0; i -= base_length, j++)
 		if (i >= base_length)
-			a.push_back(atol(s.substr(i - base_length + 1,base_length).c_str()));
+			a[j] = atol(s.substr(i - base_length + 1,base_length).c_str());
 		else
-			a.push_back(atol(s.substr(0, i + 1).c_str()));
-	val = longint(a);
+			a[j] = atol(s.substr(0, i + 1).c_str());
+	val = longint(a, m);
 	return is;
 }
 
 ostream& operator<<(ostream& os, const longint& val)
 {
-	os << val.a.back();
-	for (int i = val.a.size() - 2; i >= 0; i--)
+	int n = val.len;
+	os << val.a[n - 1];
+	for (int i = n - 2; i >= 0; i--)
 	{
 		long long now = val.a[i];
 		long long now2 = now;
@@ -92,81 +94,85 @@ ostream& operator<<(ostream& os, const longint& val)
 	return os;
 }
 
-void longint::norm(vector<long long>& a, bool need_shorten = true) const
+void longint::norm(long long*& a, size_t& l, bool need_shorten = true) const
 {
-	for (size_t i = 0; i < a.size() - 1; i++)
+	for (size_t i = 0; i < l - 1; i++)
 	{
 		if (a[i] < 0) {
 			a[i] += base;
 			a[i + 1]--;
-		}
-		if (a[i] > base)
+		} 
+		else if (a[i] > base)
 		{
 			a[i + 1] += a[i] / base;
 			a[i] %= base;
 		}	
 	}
-	while (need_shorten && a.back() == 0 && a.size() > 1) 
-		a.pop_back();
+	while (need_shorten && a[l - 1] == 0 && l > 1) 
+		l--;
 }
 
 void longint::norm()
 {
-	norm(a);
-	len = a.size();
+	norm(a, len);
 }
 
 longint longint::operator+(const longint& b) const
 {
-	vector<long long> res(max(a.size(), b.a.size()) + 1, 0);
-	for (size_t i = 0; i < b.a.size(); i++)
-		res[i] += b[i];
-	for (size_t i = 0; i < a.size(); i++)
+	size_t l = max(len, b.len) + 1;
+	long long *res = new long long[l];
+	for (size_t i = b.len; i < l; i++)
+		res[i] = 0;
+	for (size_t i = 0; i < b.len; i++)
+		res[i] = b[i];
+	for (size_t i = 0; i < len; i++)
 		res[i] += a[i];
-	return longint(res);
+	return longint(res, l);
 }
 
 longint longint::operator-(const longint& b) const
 {
-	vector<long long> res(max(a.size(), b.a.size()) + 1, 0);
-	for (size_t i = 0; i < b.a.size(); i++)
-		res[i] -= b[i];
-	for (size_t i = 0; i < a.size(); i++)
+	size_t l = max(len, b.len) + 1;
+	long long *res = new long long[l];
+	for (size_t i = b.len; i < l; i++)
+		res[i] = 0;
+	for (size_t i = 0; i < b.len; i++)
+		res[i] = -b[i];
+	for (size_t i = 0; i < len; i++)
 		res[i] += a[i];
-	return longint(res);
+	return longint(res, l);
 }
 
 longint longint::operator*(const longint& b) const
 {
-	vector<long long> res(len + b.len + 1, 0);
+	size_t l = len + b.len + 1;
+	long long *res = new long long[l];
+	for (size_t i = 0; i < l; i++)
+		res[i] = 0;
 	for (size_t i = 0; i < len; i++)
 	{
 		for (size_t j = 0; j < b.len; j++)
 			res[i + j] += a[i] * b[j];
 		if (i % 8 == 0)
-			norm(res, false);
+			norm(res, l, false);
 	}
-	return longint(res);
+	return longint(res, l);
 }
 
 longint longint::operator/(const long long& b) const
 {
-	vector<long long> res = a;
+	long long *res = a;
 	for (int i = len - 1; i >= 1; i--)
 	{
 		res[i - 1] += (res[i] % b) * base;
 		res[i] /= b;
 	}
 	res[0] /= b;
-	return longint(res);
+	return longint(res, len);
 }
 
 longint longint::operator/(const longint& b) const
 {
-	if (b.len == 1)
-		return *this / b.a[0];
-	if (b.len == 2)
-		return *this / (b.a[0] + base * b.a[1]);
 	longint l(0);
 	longint r = *this + longint(1);
 	longint one = 1;
