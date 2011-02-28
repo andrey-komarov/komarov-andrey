@@ -36,7 +36,12 @@ bool longint::operator>(const longint& b) const
 
 bool longint::operator==(const longint& b) const
 {
-	return a == b.a;
+	if (len != b.len)
+		return false;
+	for (size_t i = 0; i < len; i++)
+		if (a[i] != b.a[i])
+			return false;
+	return true;
 }
 
 bool longint::operator<(const longint& b) const
