@@ -1,4 +1,4 @@
-TIME_LIMIT_EXCEEDED on test 16
+Wrong Answer on test 01
 
-[Generated at February 27, 2011 8:05:40 PM GMT+03:00]
+[Generated at March 1, 2011 12:25:33 AM GMT+03:00]
 
