@@ -107,7 +107,7 @@ void longint::norm(long long*& a, size_t& l) const
 			a[i] += base;
 			a[i + 1]--;
 		} 
-		else if (a[i] > base)
+		else if (a[i] >= base)
 		{
 			a[i + 1] += a[i] / base;
 			a[i] %= base;
@@ -215,7 +215,7 @@ longint longint::operator/(const longint& d) const
 		c[i] = 0;
 	if (b.a[b.len - 1] < base / 2)
 	{
-		long long qq = base/(b.a[b.len - 1] + 1);
+		long long qq = base / (b.a[b.len - 1] + 1);
 		a = a * qq;
 		b = b * qq;
 	}
@@ -230,7 +230,7 @@ longint longint::operator/(const longint& d) const
 			}
 			break;
 		}
-		int tmp = a.len - 1;
+		size_t tmp = a.len - 1;
 		long long good = 0;
 		long long cc = (base * a.a[tmp] + a.a[tmp - 1]) / b.a[b.len - 1];
 		long long l = max(cc - 2, 0LL);
