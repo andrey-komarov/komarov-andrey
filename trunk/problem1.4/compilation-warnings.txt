@@ -1,5 +1,0 @@
-x:\evaluator\export\problem1.4\long.cpp(218): warning C4244: 'initializing' : conversion from '__int64' to 'int', possible loss of data [X:\evaluator\export\problem1.4\problem1.4.vcxproj]
-x:\evaluator\export\problem1.4\long.cpp(240): warning C4244: '=' : conversion from '__int64' to 'int', possible loss of data [X:\evaluator\export\problem1.4\problem1.4.vcxproj]
-
-[Generated at March 4, 2011 7:12:09 PM GMT+03:00]
-
