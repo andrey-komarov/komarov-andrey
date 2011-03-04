@@ -16,9 +16,10 @@ class longint
 	long long* a;
 	size_t len;
 	
-	longint(long long*& b, size_t len);
+	//~ longint(long long*& b, size_t len);
+	longint(long long*&, size_t);
 	void norm();
-	void norm(long long*& a, size_t&, bool) const;
+	void norm(long long*& a, size_t&) const;
 	long long operator[](int pos) const;
 	
 	public:
@@ -34,9 +35,10 @@ class longint
 	longint operator+(const longint&) const;
 	longint operator-(const longint&) const;
 	longint operator*(const longint&) const;
+	longint operator*(const long long&) const;
 	longint operator/(const long long&) const;
 	longint operator/(const longint&) const;
-	longint operator%(const longint&) const;
+	longint operator<<(const size_t) const;
 	
 	friend istream& operator>>(istream&, longint&);
 	friend ostream& operator<<(ostream&, const longint&);
