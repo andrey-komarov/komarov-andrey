@@ -1,4 +1,4 @@
-Compilation error
+Wrong Answer on test 07
 
-[Generated at March 4, 2011 7:12:09 PM GMT+03:00]
+[Generated at March 4, 2011 8:33:59 PM GMT+03:00]
 
