@@ -99,7 +99,7 @@ ostream& operator<<(ostream& os, const longint& val)
 	return os;
 }
 
-void longint::norm(long long*& a, size_t& l, bool need_shorten = true) const
+void longint::norm(long long*& a, size_t& l) const
 {
 	for (size_t i = 0; i < l - 1; i++)
 	{
@@ -113,7 +113,7 @@ void longint::norm(long long*& a, size_t& l, bool need_shorten = true) const
 			a[i] %= base;
 		}	
 	}
-	while (need_shorten && a[l - 1] == 0 && l > 1) 
+	while (a[l - 1] == 0 && l > 1) 
 		l--;
 }
 
@@ -148,18 +148,30 @@ longint longint::operator-(const longint& b) const
 	return longint(res, l);
 }
 
+longint longint::operator*(const long long& b) const
+{
+	long long *res = new long long[len + 2];
+	for (size_t i = 0; i < len; i++)
+		res[i] = a[i] * b;
+	res[len] = 0;
+	size_t new_len = len + 1;
+	norm(res, new_len);
+	return longint(res, new_len);
+}
+
 longint longint::operator*(const longint& b) const
 {
-	size_t l = len + b.len + 1;
+	size_t l = len + b.len + 2;
 	long long *res = new long long[l];
 	for (size_t i = 0; i < l; i++)
 		res[i] = 0;
 	for (size_t i = 0; i < len; i++)
 	{
 		for (size_t j = 0; j < b.len; j++)
-			res[i + j] += a[i] * b[j];
+			res[i + j] += a[i] * b.a[j];
+		size_t tmp = l;
 		if (i % 8 == 0)
-			norm(res, l, false);
+			norm(res, tmp);
 	}
 	return longint(res, l);
 }
@@ -176,35 +188,63 @@ longint longint::operator/(const long long& b) const
 	return longint(res, len);
 }
 
-longint longint::operator/(const longint& b) const
+longint	longint::operator<<(const size_t shift) const
 {
-	longint l(0);
-	longint r = *this + longint(1);
-	longint one = 1;
-	while (l + one < r)
-	{
-		longint c = (l + r) / 2;
-		size_t lenB = b.len;
-		size_t lenC = c.len;
-		if (lenB + lenC > len + 1)
-		{
-			r = c;
-			continue;
-		}
-		if (lenB + lenC + 1 < len)
-		{
-			l = c;
-			continue;
-		}
-		if (b * c > *this)
-			r = c;
-		else
-			l = c;
-	}
-	return l;
+	size_t l = len + shift;
+	long long* b = new long long[l];
+	for (size_t i = 0; i < l; i++)
+		b[i] = 0;
+	for(size_t i = 0; i < len; i++)
+		b[i + shift] = a[i];
+	norm(b, l);
+	return longint(b, l);
 }
 
-longint longint::operator%(const longint& b) const
+
+longint longint::operator/(const longint& d) const
 {
-	return *this - (*this / b) * b;
+	if(*this < d)
+		return longint(0);
+	if(*this < d * 2)
+		return longint(1);
+	longint a = *this;
+	longint b = d;
+	size_t len = a.len - b.len + 2;
+	long long* c = new long long[len];
+	for (size_t i = 0; i < len; i++)
+		c[i] = 0;
+	if (b.a[b.len - 1] < base / 2)
+	{
+		int qq = base/(b.a[b.len - 1] + 1);
+		a = a * qq;
+		b = b * qq;
+	}
+	for (int pos = a.len - 1; pos >= 0; pos--)
+	{
+		if (a.len == 1)
+		{
+			if(a > b)
+			{
+				c[0] += a.a[0] / b.a[0];
+				a.a[0] -= c[0] * b.a[0];
+			}
+			break;
+		}
+		int tmp = a.len - 1;
+		int good = 0;
+		long long cc = (base * a.a[tmp] + a.a[tmp - 1]) / b.a[b.len - 1];
+		long long l = max(cc - 2, 0LL);
+		long long r = cc + 2;
+		for (long long j = l; j <= r; j++) {
+			if( ((b * j) << pos) <= a)
+				good = j;
+		}
+		c[pos] += good;
+		a = a - ((b * good) << pos);
+	}
+	
+	if(a >= b && a < b * 2)
+		c[0]++;
+	norm(c, len);
+	return longint(c, len);
 }
