@@ -215,7 +215,7 @@ longint longint::operator/(const longint& d) const
 		c[i] = 0;
 	if (b.a[b.len - 1] < base / 2)
 	{
-		int qq = base/(b.a[b.len - 1] + 1);
+		long long qq = base/(b.a[b.len - 1] + 1);
 		a = a * qq;
 		b = b * qq;
 	}
@@ -231,7 +231,7 @@ longint longint::operator/(const longint& d) const
 			break;
 		}
 		int tmp = a.len - 1;
-		int good = 0;
+		long long good = 0;
 		long long cc = (base * a.a[tmp] + a.a[tmp - 1]) / b.a[b.len - 1];
 		long long l = max(cc - 2, 0LL);
 		long long r = cc + 2;
