@@ -1,11 +1,11 @@
 longint::longint(int b)
 {
-	a = new long long[1];
-	a[0] = b;
+	a = vector<long long>();
+	a.push_back(b);
 	len = 1;
 }
 
-longint::longint(long long*& b, size_t l)
+longint::longint(const vector<long long>& b, size_t l)
 {
 	a = b;
 	len = l;
@@ -44,35 +44,35 @@ bool longint::operator==(const longint& b) const
 	return true;
 }
 
-bool longint::operator<(const longint& b) const
+bool operator<(const longint& a, const longint& b) 
 {
-	return b > *this;
+	return b > a;
 }
 
-bool longint::operator>=(const longint& b) const
+bool operator>=(const longint& a, const longint& b)
 {
-	return *this > b || *this == b;
+	return !(a < b);
 }
 
-bool longint::operator<=(const longint& b) const
+bool operator<=(const longint& a, const longint& b)
 {
-	return *this < b || *this == b;
+	return !(b < a);
 }
 
-bool longint::operator!=(const longint& b) const
+bool operator!=(const longint& a, const longint& b)
 {
-	return !(*this == b);
+	return !(a == b);
 }
 
 istream& operator>>(istream& is, longint& val) 
 {
 	string s;
-	long long* a;
+	vector<long long> a;
 	if (!(is >> s))
 		return is >> s;
 	size_t n = s.size();
 	size_t m = (n - 1) / base_length + 1;
-	a = new long long[m];
+	a = vector<long long>(m);
 	for (int i = n - 1, j = 0; i >= 0; i -= base_length, j++)
 		if (i >= base_length)
 			a[j] = atol(s.substr(i - base_length + 1,base_length).c_str());
@@ -99,7 +99,7 @@ ostream& operator<<(ostream& os, const longint& val)
 	return os;
 }
 
-void longint::norm(long long*& a, size_t& l) const
+void longint::norm(vector<long long>& a, size_t& l) const
 {
 	for (size_t i = 0; i < l - 1; i++)
 	{
@@ -125,7 +125,7 @@ void longint::norm()
 longint longint::operator+(const longint& b) const
 {
 	size_t l = max(len, b.len) + 1;
-	long long *res = new long long[l];
+	vector<long long> res = vector<long long>(l);
 	for (size_t i = b.len; i < l; i++)
 		res[i] = 0;
 	for (size_t i = 0; i < b.len; i++)
@@ -138,7 +138,7 @@ longint longint::operator+(const longint& b) const
 longint longint::operator-(const longint& b) const
 {
 	size_t l = max(len, b.len) + 1;
-	long long *res = new long long[l];
+	vector<long long> res = vector<long long>(l);
 	for (size_t i = b.len; i < l; i++)
 		res[i] = 0;
 	for (size_t i = 0; i < b.len; i++)
@@ -150,7 +150,7 @@ longint longint::operator-(const longint& b) const
 
 longint longint::operator*(const long long& b) const
 {
-	long long *res = new long long[len + 2];
+	vector<long long> res = vector<long long>(len + 2);
 	for (size_t i = 0; i < len; i++)
 		res[i] = a[i] * b;
 	res[len] = 0;
@@ -162,7 +162,7 @@ longint longint::operator*(const long long& b) const
 longint longint::operator*(const longint& b) const
 {
 	size_t l = len + b.len + 2;
-	long long *res = new long long[l];
+	vector<long long> res = vector<long long>(l);
 	for (size_t i = 0; i < l; i++)
 		res[i] = 0;
 	for (size_t i = 0; i < len; i++)
@@ -178,7 +178,7 @@ longint longint::operator*(const longint& b) const
 
 longint longint::operator/(const long long& b) const
 {
-	long long *res = a;
+	vector<long long> res = a;
 	for (int i = len - 1; i >= 1; i--)
 	{
 		res[i - 1] += (res[i] % b) * base;
@@ -191,7 +191,7 @@ longint longint::operator/(const long long& b) const
 longint	longint::operator<<(const size_t shift) const
 {
 	size_t l = len + shift;
-	long long* b = new long long[l];
+	vector<long long> b = vector<long long>(l);
 	for (size_t i = 0; i < l; i++)
 		b[i] = 0;
 	for(size_t i = 0; i < len; i++)
@@ -210,7 +210,7 @@ longint longint::operator/(const longint& d) const
 	longint a = *this;
 	longint b = d;
 	size_t len = a.len - b.len + 2;
-	long long* c = new long long[len];
+	vector<long long> c = vector<long long>(len);
 	for (size_t i = 0; i < len; i++)
 		c[i] = 0;
 	if (b.a[b.len - 1] < base / 2)
