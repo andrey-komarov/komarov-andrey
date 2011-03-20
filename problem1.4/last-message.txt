@@ -1,4 +1,4 @@
-Accepted
+Runtime Error on test 07
 
-[Generated at March 4, 2011 8:55:01 PM GMT+03:00]
+[Generated at March 20, 2011 12:45:06 PM GMT+03:00]
 
