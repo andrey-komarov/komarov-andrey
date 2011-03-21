@@ -188,7 +188,7 @@ longint longint::operator/(const long long& b) const
     return longint(res, len);
 }
 
-longint    longint::operator<<(const size_t shift) const
+longint longint::operator<<(const size_t shift) const
 {
     size_t l = len + shift;
     vector<long long> b = vector<long long>(l);
@@ -213,7 +213,7 @@ longint longint::operator/(const longint& d) const
     vector<long long> c = vector<long long>(len);
     for (size_t i = 0; i < len; i++)
         c[i] = 0;
-    if (b.a[b.len - 1] < base / 2)
+	if (b.a[b.len - 1] < 3 * base / 4)
     {
         long long qq = base / (b.a[b.len - 1] + 1);
         a = a * qq;
@@ -233,16 +233,15 @@ longint longint::operator/(const longint& d) const
         size_t tmp = a.len - 1;
         long long good = 0;
         long long cc = (base * a.a[tmp] + a.a[tmp - 1]) / b.a[b.len - 1];
-        long long l = max(cc - 2, 0LL);
-        long long r = cc + 2;
+        long long l = max(cc - 6, 0LL);
+        long long r = cc + 6;
         for (long long j = l; j <= r; j++) {
             if( ((b * j) << pos) <= a)
                 good = j;
         }
         c[pos] += good;
         a = a - ((b * good) << pos);
-    }
-    
+    }    
     if(a >= b && a < b * 2)
         c[0]++;
     norm(c, len);
