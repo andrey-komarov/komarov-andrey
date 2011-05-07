@@ -33,7 +33,7 @@ struct big_int
     big_int& operator/=(big_int);
     big_int& operator%=(const big_int&);
 
-//~ private:
+private:
     container a;
     size_t len;
     bool negative;
