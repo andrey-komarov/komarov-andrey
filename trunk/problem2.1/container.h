@@ -15,7 +15,6 @@ struct container
 	container();
 	container(size_t);
 	container(const container&);
-	container(const container&, size_t);
 	container& operator=(const container&);
 	void resize(size_t);
 	size_t size() const;
@@ -25,6 +24,7 @@ struct container
 	void norm();
 
 private:
+	container(const container&, size_t);
 	size_t size_;
 	union {
 		digit_t * digits_;
