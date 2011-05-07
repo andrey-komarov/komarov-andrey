@@ -2,5 +2,5 @@ x:\evaluator\export\problem1.4\container.cpp(82): error C3083: '{ctor}': the sym
 x:\evaluator\export\problem1.4\container.cpp(83): error C2533: 'container::resize' : constructors not allowed a return type [X:\evaluator\export\problem1.4\problem1.4.vcxproj]
 x:\evaluator\export\problem1.4\container.cpp(91): error C2264: 'container::resize' : error in function definition or declaration; function not called [X:\evaluator\export\problem1.4\problem1.4.vcxproj]
 
-[Generated at May 7, 2011 5:43:13 PM GMT+03:00]
+[Generated at May 7, 2011 6:15:20 PM GMT+03:00]
 
