@@ -1,5 +1,5 @@
 x:\evaluator\export\problem1.4\big_int.cpp(163): warning C4804: '~' : unsafe use of type 'bool' in operation [X:\evaluator\export\problem1.4\problem1.4.vcxproj]
 x:\evaluator\export\problem1.4\big_int.cpp(163): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning) [X:\evaluator\export\problem1.4\problem1.4.vcxproj]
 
-[Generated at May 7, 2011 5:43:14 PM GMT+03:00]
+[Generated at May 7, 2011 6:15:21 PM GMT+03:00]
 
