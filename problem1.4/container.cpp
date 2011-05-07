@@ -35,7 +35,7 @@ container::container(const container& other, size_t size): size_(size)
 {
 	if (size_ == 1)
 	{
-		digit_ = other.digit_;
+		digit_ = other[0];
 	}
 	else
 	{
