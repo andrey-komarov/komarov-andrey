@@ -1,13 +1,13 @@
 #include <fstream>
 #include <string>
-#include "long.h"
+#include "big_int.h"
 
 int main()
 {
     std::ifstream in("in.txt");
     std::ofstream out("out.txt");
-    longint a, b;
-    longint zero = 0;
+    big_int a, b;
+    big_int zero = 0;
     while (in >> a >> b)
     {
         if (b == zero)
