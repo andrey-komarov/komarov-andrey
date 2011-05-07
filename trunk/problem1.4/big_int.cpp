@@ -160,7 +160,7 @@ void big_int::norm()
 {
     norm(a, len);
     if (a[len - 1] < 0) {
-    	negative = ~negative;
+    	negative = !negative;
     	for (size_t i = 0; i < len; i++)
     		a[i] = -a[i];
     	norm();

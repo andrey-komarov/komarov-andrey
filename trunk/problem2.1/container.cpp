@@ -79,7 +79,7 @@ void swap(container &a, container &b)
 	b = c;
 }
 
-void container::container::resize(size_t sz)
+void container::resize(size_t sz)
 {
 	container tmp(*this, sz);
 	swap(*this, tmp);
