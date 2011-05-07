@@ -1,9 +1,3 @@
-x:\evaluator\export\problem2.1\container.cpp(82): error C3083: '{ctor}': the symbol to the left of a '::' must be a type [X:\evaluator\export\problem2.1\build.xml]
-x:\evaluator\export\problem2.1\container.cpp(83): error C2533: 'container::resize' : constructors not allowed a return type [X:\evaluator\export\problem2.1\build.xml]
-x:\evaluator\export\problem2.1\container.cpp(91): error C2264: 'container::resize' : error in function definition or declaration; function not called [X:\evaluator\export\problem2.1\build.xml]
-x:\evaluator\export\problem2.1\container.cpp(82): error C3083: '{ctor}': the symbol to the left of a '::' must be a type [X:\evaluator\export\problem2.1\build.xml]
-x:\evaluator\export\problem2.1\container.cpp(83): error C2533: 'container::resize' : constructors not allowed a return type [X:\evaluator\export\problem2.1\build.xml]
-x:\evaluator\export\problem2.1\container.cpp(91): error C2264: 'container::resize' : error in function definition or declaration; function not called [X:\evaluator\export\problem2.1\build.xml]
 x:\evaluator\export\problem2.1\big_int.cpp(4): error C2653: 'big_int' : is not a class or namespace name [X:\evaluator\export\problem2.1\build.xml]
 x:\evaluator\export\problem2.1\big_int.cpp(4): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int [X:\evaluator\export\problem2.1\build.xml]
 x:\evaluator\export\problem2.1\big_int.cpp(4): error C3861: 'container': identifier not found [X:\evaluator\export\problem2.1\build.xml]
@@ -115,5 +109,5 @@ x:\evaluator\export\problem2.1\big_int.cpp(94): error C2563: mismatch in formal 
 x:\evaluator\export\problem2.1\big_int.cpp(94): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int [X:\evaluator\export\problem2.1\build.xml]
 x:\evaluator\export\problem2.1\big_int.cpp(94): fatal error C1903: unable to recover from previous error(s); stopping compilation [X:\evaluator\export\problem2.1\build.xml]
 
-[Generated at May 7, 2011 5:33:59 PM GMT+03:00]
+[Generated at May 7, 2011 9:06:58 PM GMT+03:00]
 
