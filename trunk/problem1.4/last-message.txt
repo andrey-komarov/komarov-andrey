@@ -1,4 +1,4 @@
-Runtime Error on test 07
+Compilation error
 
-[Generated at March 21, 2011 1:10:59 PM GMT+03:00]
+[Generated at May 7, 2011 5:24:22 PM GMT+03:00]
 
