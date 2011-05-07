@@ -14,8 +14,8 @@ int main()
             out << "<error>\n\n\n";
         else
         {
-            longint q = a / b;
-            longint r = a - q * b;
+            big_int q = a / b;
+            big_int r = a - q * b;
             out << q << "\n" << r << "\n\n";
         }
     }
