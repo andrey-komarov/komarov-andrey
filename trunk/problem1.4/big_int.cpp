@@ -1,5 +1,6 @@
 #ifndef big_intCPP
 #define big_intCPP
+#include "big_int.h"
 
 big_int::big_int(): a(container(1)), len(1), negative(false)
 {
