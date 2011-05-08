@@ -65,6 +65,6 @@ big_int operator/(big_int, const digit_t&);
 big_int operator/(big_int, const big_int&);
 big_int operator%(big_int, const big_int&);
 
-#include "big_int.cpp"
+// #include "big_int.cpp"
 
 #endif /* big_intH */
