@@ -301,8 +301,8 @@ big_int& big_int::operator/=(big_int b)
         size_t tmp = len - 1;
         long long good = 0;
         long long cc = (base * a[tmp] + a[tmp - 1]) / b.a[b.len - 1];
-        long long l = max(cc - 6, 0LL);
-        long long r = cc + 6;
+        long long l = max(cc - 1, 0LL);
+        long long r = cc + 1;
         for (long long j = l; j <= r; j++) {
             if( ((b * j) << pos) <= (*this))
                 good = j;
