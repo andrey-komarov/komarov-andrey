@@ -1,5 +1,5 @@
 all:
-	g++ -lboost_unit_test_framework big_int_test.cpp -o test
+	g++ -lboost_unit_test_framework container.cpp big_int.cpp big_int_test.cpp -o test
 	./test
 
 main:

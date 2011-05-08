@@ -70,7 +70,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="container.cpp" />
+    <ClCompile Include="big_int.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+	<ClInclude Include="container.h" />
+    <ClInclude Include="big_int.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="in.txt" />
