@@ -1,5 +1,0 @@
-x:\evaluator\export\problem2.1\big_int.cpp(8): warning C4508: 'big_int' : function should return a value; 'void' return type assumed [X:\evaluator\export\problem2.1\build.xml]
-x:\evaluator\export\problem2.1\big_int.cpp(23): warning C4508: 'big_int' : function should return a value; 'void' return type assumed [X:\evaluator\export\problem2.1\build.xml]
-
-[Generated at May 7, 2011 9:07:00 PM GMT+03:00]
-
