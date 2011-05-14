@@ -3,7 +3,7 @@ all:
 	./test
 
 main:
-	g++ main.cpp -o main
+	g++ main.cpp big_int.cpp container.cpp -o main
 	./main
 	
 clean:

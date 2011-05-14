@@ -96,8 +96,27 @@ istream& operator>>(istream& is, big_int& val)
 {
     string s;
     container a;
-    if (!(is >> s))
-        return is >> s;
+    
+    while (!is.eof() && isspace(is.peek()))
+		is.get();
+	if (is.peek() == '+')
+		is.get();
+	else if (is.peek() == '-')
+		s.push_back(is.get());
+    
+    if (is.eof()) {
+		return is;
+    }
+    
+    if (!isdigit(is.peek())) {
+		is.seekg(0, std::ios::end);
+		is.setstate(std::ios::failbit);
+		return is;
+	}
+    
+    while (!is.eof() && isdigit(is.peek()))
+		s.push_back(is.get());
+    
     bool neg = false;
     if (s[0] == '-') {
     	neg = true;
