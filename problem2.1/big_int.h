@@ -12,7 +12,7 @@ struct big_int
 {
     big_int(digit_t = 0);
     big_int(const big_int&);
-	big_int(const std::string&);
+	big_int(std::string);
     void swap(big_int&);
     bool operator==(const big_int&) const;
     bool operator>(const big_int&) const;
