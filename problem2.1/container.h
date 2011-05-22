@@ -6,14 +6,11 @@
 
 typedef long long digit_t;
 
-using std::cerr;
-
 class badindex{};
 
 struct container
 {
-	container();
-	container(size_t);
+	explicit container(size_t size = 0);
 	container(const container&);
 	container& operator=(const container&);
 	void resize(size_t);
@@ -21,8 +18,6 @@ struct container
 	digit_t& operator[](size_t);
 	digit_t operator[](size_t) const;
 	~container();
-	void norm();
-
 private:
 	container(const container&, size_t);
 	size_t size_;
@@ -31,10 +26,7 @@ private:
 		digit_t digit_;
 	};
 
-	friend void swap(container&, container&);
 	friend std::ostream& operator<<(std::ostream&, const container&);
 };
-
-// #include "container.cpp"
 
 #endif

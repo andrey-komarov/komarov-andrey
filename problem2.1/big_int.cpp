@@ -2,44 +2,33 @@
 #define big_intCPP
 #include "big_int.h"
 
-big_int::big_int(): a(container(1)), len(1), negative(false)
+big_int::big_int(digit_t b): 
+	negative(false), 
+	a(container(1)), 
+	len(1)
 {
-	a[0] = 0;
-	norm();
-}
-
-big_int::big_int(digit_t b): negative(false)
-{
-    a = container(1);
 	a[0] = b;
-    len = 1;
-    norm();
+    normalize();
 }
 
-big_int::big_int(const container& b, size_t l): negative(false)
+big_int::big_int(const container& b, size_t l): 
+	negative(false), 
+	len(l), 
+	a(b)
 {
-    a = b;
-    len = l;
-    norm();
+    normalize();
 }
 
-big_int::big_int(const big_int& other)
+big_int::big_int(const big_int& other): 
+	a(other.a), 
+	len(other.len), 
+	negative(other.negative)
 {
-    a = other.a;
-    len = other.len;
-    negative =  other.negative;
 }
 
 void big_int::swap(big_int& b)
 {
-	swap(*this, b);
-}
-
-void big_int::swap(big_int& a, big_int& b)
-{
-	big_int c = a;
-	a = b;
-	b = c;
+	std::swap(*this, b);
 }
 
 big_int abs(big_int a)
@@ -92,9 +81,9 @@ bool operator!=(const big_int& a, const big_int& b)
 	return !(a == b);
 }
 
-istream& operator>>(istream& is, big_int& val)
+std::istream& operator>>(std::istream& is, big_int& val)
 {
-    string s;
+    std::string s;
     container a;
     
     while (!is.eof() && isspace(is.peek()))
@@ -104,11 +93,13 @@ istream& operator>>(istream& is, big_int& val)
 	else if (is.peek() == '-')
 		s.push_back(is.get());
     
-    if (is.eof()) {
+    if (is.eof()) 
+    {
 		return is;
     }
     
-    if (!isdigit(is.peek())) {
+    if (!isdigit(is.peek())) 
+    {
 		is.seekg(0, std::ios::end);
 		is.setstate(std::ios::failbit);
 		return is;
@@ -118,16 +109,17 @@ istream& operator>>(istream& is, big_int& val)
 		s.push_back(is.get());
     
     bool neg = false;
-    if (s[0] == '-') {
+    if (s[0] == '-') 
+    {
     	neg = true;
     	s = s.substr(1, s.size() - 1);
     }
     size_t n = s.size();
-    size_t m = (n - 1) / base_length + 1;
+    size_t m = (n - 1) / big_int::base_length + 1;
     a = container(m);
-    for (int i = n - 1, j = 0; i >= 0; i -= base_length, j++)
-        if (i >= (int)base_length)
-            a[j] = atol(s.substr(i - base_length + 1,base_length).c_str());
+    for (int i = n - 1, j = 0; i >= 0; i -= big_int::base_length, j++)
+        if (i >= static_cast<int>(big_int::base_length))
+            a[j] = atol(s.substr(i - big_int::base_length + 1, big_int::base_length).c_str());
         else
             a[j] = atol(s.substr(0, i + 1).c_str());
     val = big_int(a, m);
@@ -135,7 +127,7 @@ istream& operator>>(istream& is, big_int& val)
     return is;
 }
 
-ostream& operator<<(ostream& os, const big_int& val)
+std::ostream& operator<<(std::ostream& os, const big_int& val)
 {
     int n = val.len;
     if (val.negative)
@@ -147,14 +139,14 @@ ostream& operator<<(ostream& os, const big_int& val)
         digit_t now2 = now;
         int len = 0;
         for (len = 0; now2 > 9; now2 /= 10, len++);
-        for (size_t i = 0; i < base_length - len - 1; i++)
+        for (size_t i = 0; i < big_int::base_length - len - 1; i++)
             os << "0";
         os << now;
     }
     return os;
 }
 
-void big_int::norm(container& a, size_t& l) const
+void big_int::normalize(container& a, size_t& l)
 {
     bool expand = false;
     for (size_t i = 0; i < l; i++)
@@ -176,14 +168,14 @@ void big_int::norm(container& a, size_t& l) const
         l--;
 }
 
-void big_int::norm()
+void big_int::normalize()
 {
-    norm(a, len);
+    normalize(a, len);
     if (a[len - 1] < 0) {
     	negative = !negative;
     	for (size_t i = 0; i < len; i++)
     		a[i] = -a[i];
-    	norm();
+    	normalize();
     }
     if (len == 1 && a[0] == 0)
 		negative = false;
@@ -191,12 +183,12 @@ void big_int::norm()
 
 big_int& big_int::operator+=(const big_int& b)
 {
-	len = max(len, b.len);
+	len = std::max(len, b.len);
 	for (size_t i = 0; i < len; i++) {
 		a[i] = a[i] * (negative ? -1 : 1) + b.a[i] * (b.negative ? -1 : 1);
 	}
 	negative = false;
-	norm();
+	normalize();
 	return *this;
 }
 
@@ -225,7 +217,7 @@ big_int& big_int::operator*=(const digit_t& b)
 {
 	for (size_t i = 0; i < len; i++)
 		a[i] *= b;
-	norm();
+	normalize();
 	return *this;
 }
 
@@ -247,12 +239,12 @@ big_int& big_int::operator*=(const big_int& b)
             res[i + j] += a[i] * b.a[j];
         size_t tmp = l;
         if (i % 8 == 0)
-            norm(res, tmp);
+            normalize(res, tmp);
     }
     big_int a(res, l);
-    swap(a, *this);
+    std::swap(a, *this);
     negative = sign;
-    norm();
+    normalize();
     return *this;
 }
 
@@ -269,7 +261,7 @@ big_int& big_int::operator/=(const digit_t& b)
         a[i] /= b;
     }
     a[0] /= b;
-    norm();
+    normalize();
     return *this;
 }
 
@@ -286,7 +278,7 @@ big_int big_int::operator<<(const size_t shift) const
         b[i] = 0;
     for(size_t i = 0; i < len; i++)
         b[i + shift] = a[i];
-    norm(b, l);
+    normalize(b, l);
     return big_int(b, l);
 }
 
@@ -295,13 +287,9 @@ big_int& big_int::operator/=(big_int b)
 	bool sign = negative ^ b.negative;
 	*this = abs(*this);
 	b = abs(b);
-	if(*this < b)
-        return *this = 0;
-    if(*this < b * 2)
-        return *this = sign ? -1 : 1;
     size_t lenN = len - b.len + 2;
     container c(lenN);
-    if (b.a[b.len - 1] < 3 * base / 4)
+    if (b.a[b.len - 1] < base / 2)
     {
         digit_t qq = base / (b.a[b.len - 1] + 1);
         (*this) *= qq;
@@ -321,7 +309,7 @@ big_int& big_int::operator/=(big_int b)
         size_t tmp = len - 1;
         long long good = 0;
         long long cc = (base * a[tmp] + a[tmp - 1]) / b.a[b.len - 1];
-        long long l = max(cc - 1, 0LL);
+        long long l = std::max(cc - 1, 0LL);
         long long r = cc + 1;
         for (long long j = l; j <= r; j++) {
             if( ((b * j) << pos) <= (*this))
@@ -332,7 +320,7 @@ big_int& big_int::operator/=(big_int b)
     }
     if((*this) >= b && (*this) < b * 2)
         c[0]++;
-    norm(c, lenN);
+    normalize(c, lenN);
     *this = big_int(c, lenN);
     negative = sign;
     return *this;
