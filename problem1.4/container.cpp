@@ -3,10 +3,6 @@
 
 #include "container.h"
 
-container::container(): size_(0)
-{
-}
-
 container::container(size_t size): size_(size)
 {
 	if (size_ > 1) {
@@ -48,6 +44,10 @@ container::container(const container& other, size_t size): size_(size)
 }
 
 container& container::operator=(const container& a) {
+	if (&a == this)
+		return *this;
+	if (size_ > 1)
+		delete[] digits_;
 	size_ = a.size_;
 	if (size_ > 1)
 		digits_ = new digit_t[size_];
@@ -59,7 +59,7 @@ container& container::operator=(const container& a) {
 container::~container()
 {
 	if (size_ > 1) {
-		delete digits_;
+		delete[] digits_;
 	}
 }
 
@@ -72,23 +72,16 @@ std::ostream& operator<<(std::ostream& out, const container& a)
 	return out;
 }
 
-void swap(container &a, container &b)
-{
-	container c = a;
-	a = b;
-	b = c;
-}
-
 void container::resize(size_t sz)
 {
 	container tmp(*this, sz);
-	swap(*this, tmp);
+	std::swap(*this, tmp);
 }
 
 digit_t& container::operator[] (size_t pos)
 {
 	if (pos >= size_)
-		resize((int)(1.9 * pos) + 2);
+		resize(static_cast<int>(1.9 * pos) + 2);
 	return size_ == 1 ? digit_ : digits_[pos];
 }
 
