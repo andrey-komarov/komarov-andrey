@@ -289,6 +289,8 @@ big_int big_int::operator<<(const size_t shift) const
 
 big_int& big_int::operator/=(big_int b)
 {
+	if (b == 0)
+		throw std::runtime_error("division by zero");
 	bool sign = negative ^ b.negative;
 	*this = abs(*this);
 	b = abs(b);

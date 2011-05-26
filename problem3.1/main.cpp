@@ -1,23 +1,35 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <map>
-#include <vector>
+#include <stdexcept>
 #include "calculator.h"
 #include "function.h"
 
+using namespace std;
+
 int main()
 {
-    std::string str;
-    while (getline(std::cin, str))
+	std::ifstream in("in.txt");
+	std::ofstream out("out.txt");
+    std::string s;
+    while (getline(in, s))
     {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
+        if (s.empty())
             break;
-
-        std::cout << calculate(str) << "\n";
-        
+        try
+        {
+			big_int ans = calculate(s);
+			out << ans << "\n";
+		}
+		catch (std::runtime_error e)
+		{
+			out << "<error>\n";
+		}
+		catch (std::exception e)
+		{
+			out << "<error>\n";
+		}
+		
     }
-
-    std::cout << "Bye... :-) \n\n";
     return 0;	
 }
