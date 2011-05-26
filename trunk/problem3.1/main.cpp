@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include "calculator.h"
+#include "function.h"
 
 int main()
 {

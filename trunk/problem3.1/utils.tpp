@@ -29,4 +29,10 @@ big_int utils::pow_impl::operator()(T a, K b) const
 	return power(a, b);
 }
 
+template<typename T, typename K>
+big_int utils::func_impl::operator()(T a, K b) const
+{
+	return get_functions()[a](b);
+}
+
 #endif

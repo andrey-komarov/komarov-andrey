@@ -26,7 +26,7 @@ namespace
 	{
 		calculator();
 	private:
-		qi::rule<Iterator, big_int(), ascii::space_type> sum, product, power, expr, s, number;
+		qi::rule<Iterator, big_int(), ascii::space_type> sum, product, power, expr, s, number, function;
 		qi::rule<Iterator, std::string(), ascii::space_type> unsigned_number, function_name;
 	};
 	
