@@ -2,18 +2,23 @@
 #define functionH
 
 #include <string>
+#include <map>
+#include <stdexcept>
+#include "big_int.h"
 
 struct function_t
 {
-	//~ function_t(const std::string&, boost::function<big_int(big_int)>);
-	//~ string get_name();
-	//~ big_int apply(const big_int&);
-//~ private:
-	//~ std::string name_;
-	//~ boost::function<big_int (big_int)> f_;
+	function_t();
+	function_t(const std::string&, big_int(*f)(big_int));
+	std::string get_name() const ;
+	big_int operator()(big_int a) const;
+private:
+	std::string name_;
+	big_int(*f_)(big_int);
 };
-//~ 
-//~ std::map<string, function_t*>& get_functions();
+
+std::map<std::string, function_t>& get_functions();
+
+#define add_function(name, f) namespace{struct initializer##f{initializer##f(){get_functions()[name] = function_t(name, f);	}};	initializer##f a##f;};
 
 #endif /* functionH */
-

@@ -9,12 +9,14 @@ namespace
 	calculator<Iterator>::calculator() : calculator<Iterator>::base_type(s)
 	{
 		unsigned_number = +(ascii::digit);
+		function_name = +(ascii::alpha);
 		number = unsigned_number[_val = construct_big_int()(_1)];
 		expr = 
 			number[_val = _1]
 			| (lit("-") >> expr)[_val = -_1]
 			| (lit("+") >> expr)[_val = _1]			
-			| (lit("(") >> sum >> lit(")"))[_val = _1];
+			| (lit("(") >> sum >> lit(")"))[_val = _1]
+			| (function_name >> lit("(") >> sum >> lit(")"))[_val = func()(_1, _2)];
 		sum = product[_val = _1] >> *(
 			(lit("+") >> product)[_val += _1]
 			| (lit("-") >> product)[_val -= _1]

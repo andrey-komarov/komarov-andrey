@@ -15,5 +15,10 @@ boost::phoenix::function<utils::pow_impl>& pow()
 	return f;
 }
 
+boost::phoenix::function<utils::func_impl>& func()
+{
+	static boost::phoenix::function<utils::func_impl> f;
+	return f;
+}
 
 #endif /* utilsCPP */
