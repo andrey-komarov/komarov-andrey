@@ -289,9 +289,13 @@ big_int big_int::operator<<(const size_t shift) const
 
 big_int& big_int::operator/=(big_int b)
 {
+	if (b == 0)
+		throw std::runtime_error("division by zero");
 	bool sign = negative ^ b.negative;
 	*this = abs(*this);
 	b = abs(b);
+	if (*this < b)
+		return *this = 0;
 	size_t lenN = len - b.len + 2;
 	container c(lenN);
 	if (b.a[b.len - 1] < base / 2)
@@ -314,8 +318,8 @@ big_int& big_int::operator/=(big_int b)
 		size_t tmp = len - 1;
 		digit_t good = 0;
 		digit_t cc = (base * a[tmp] + a[tmp - 1]) / b.a[b.len - 1];
-		digit_t l = std::max(cc - 1, 0LL);
-		digit_t r = cc + 1;
+		digit_t l = std::max(cc - 2, 0LL);
+		digit_t r = cc + 2;
 		for (digit_t j = l; j <= r; j++) {
 			if( ((b * j) << pos) <= (*this))
 				good = j;
