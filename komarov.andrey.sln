@@ -11,6 +11,8 @@ Project("{89ABCDEF-0000-0000-0000-000000000003}") = "problem1.4", "problem1.4\pr
 EndProject
 Project("{89ABCDEF-0000-0000-0000-000000000005}") = "problem2.1", "problem2.1\problem2.1.vcxproj", "{89ABCDEF-0000-0000-0000-000000000005}"
 EndProject
+Project("{89ABCDEF-0000-0000-0000-000000000006}") = "problem3.1", "problem3.1\problem3.1.vcxproj", "{89ABCDEF-0000-0000-0000-000000000006}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -37,6 +39,10 @@ Global
 		{89ABCDEF-0000-0000-0000-000000000005}.Debug|Win32.Build.0 = Debug|Win32
 		{89ABCDEF-0000-0000-0000-000000000005}.Release|Win32.ActiveCfg = Release|Win32
 		{89ABCDEF-0000-0000-0000-000000000005}.Release|Win32.Build.0 = Release|Win32
+		{89ABCDEF-0000-0000-0000-000000000006}.Debug|Win32.ActiveCfg = Debug|Win32
+		{89ABCDEF-0000-0000-0000-000000000006}.Debug|Win32.Build.0 = Debug|Win32
+		{89ABCDEF-0000-0000-0000-000000000006}.Release|Win32.ActiveCfg = Release|Win32
+		{89ABCDEF-0000-0000-0000-000000000006}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
