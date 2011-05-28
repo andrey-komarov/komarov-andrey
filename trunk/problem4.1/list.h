@@ -6,7 +6,7 @@ const digit_t BASE = 10;
 
 struct EmptyList{};
 
-template<long long A, typename T>
+template<digit_t A, typename T>
 struct L{
 	typedef T Tail;
 	enum {Head = A};
