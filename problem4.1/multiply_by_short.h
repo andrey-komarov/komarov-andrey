@@ -2,6 +2,7 @@
 #define multiply_by_shortH
 
 #include "list.h"
+// For inner use only
 // Warning: multiplies reversed number!
 
 template<typename T, digit_t A>
