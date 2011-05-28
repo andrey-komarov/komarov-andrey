@@ -26,7 +26,7 @@ ostream& operator<<(ostream& out, L<A, T> a)
 
 int main()
 {
-	typedef L<4, L<8, L<7, L<6, EmptyList> > > > list;
+	typedef L<1, L<8, L<7, L<6, EmptyList> > > > list;
 	typedef L<2, L<5, EmptyList> > list2;
 	cout << DIVIDE<list, list2>::type() << "\n";
 }
