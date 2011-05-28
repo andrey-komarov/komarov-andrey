@@ -1,4 +1,4 @@
-No project files (*.vcxproj) were found
+Compilation error
 
-[Generated at May 28, 2011 10:23:21 AM GMT+03:00]
+[Generated at May 28, 2011 1:41:41 PM GMT+03:00]
 

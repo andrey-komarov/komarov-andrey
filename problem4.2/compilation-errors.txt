@@ -1,0 +1,10 @@
+x:\evaluator\export\problem4.2\merge.h(26): error C2059: syntax error : ')' [X:\evaluator\export\problem4.2\problem4.2.vcxproj]
+x:\evaluator\export\problem4.2\merge.h(26): error C2143: syntax error : missing ',' before ')' [X:\evaluator\export\problem4.2\problem4.2.vcxproj]
+x:\evaluator\export\problem4.2\merge.h(26): error C2947: expecting '>' to terminate template-argument-list, found '>' [X:\evaluator\export\problem4.2\problem4.2.vcxproj]
+x:\evaluator\export\problem4.2\merge.h(26): error C2146: syntax error : missing ')' before identifier 'type' [X:\evaluator\export\problem4.2\problem4.2.vcxproj]
+x:\evaluator\export\problem4.2\merge.h(26): error C2143: syntax error : missing '>' before ';' [X:\evaluator\export\problem4.2\problem4.2.vcxproj]
+x:\evaluator\export\problem4.2\merge.h(30): error C2143: syntax error : missing ';' before '}' [X:\evaluator\export\problem4.2\problem4.2.vcxproj]
+x:\evaluator\export\problem4.2\merge.h(30): fatal error C1004: unexpected end-of-file found [X:\evaluator\export\problem4.2\problem4.2.vcxproj]
+
+[Generated at May 28, 2011 1:41:40 PM GMT+03:00]
+
