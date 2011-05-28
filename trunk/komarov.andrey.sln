@@ -13,6 +13,11 @@ Project("{89ABCDEF-0000-0000-0000-000000000005}") = "problem2.1", "problem2.1\pr
 EndProject
 Project("{89ABCDEF-0000-0000-0000-000000000006}") = "problem3.1", "problem3.1\problem3.1.vcxproj", "{89ABCDEF-0000-0000-0000-000000000006}"
 EndProject
+Project("{89ABCDEF-0000-0000-0000-000000000007}") = "problem4.1", "problem4.1\problem4.1.vcxproj", "{89ABCDEF-0000-0000-0000-000000000007}"
+EndProject
+Project("{89ABCDEF-0000-0000-0000-000000000008}") = "problem4.2", "problem4.2\problem4.2.vcxproj", "{89ABCDEF-0000-0000-0000-000000000008}"
+EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -43,6 +48,14 @@ Global
 		{89ABCDEF-0000-0000-0000-000000000006}.Debug|Win32.Build.0 = Debug|Win32
 		{89ABCDEF-0000-0000-0000-000000000006}.Release|Win32.ActiveCfg = Release|Win32
 		{89ABCDEF-0000-0000-0000-000000000006}.Release|Win32.Build.0 = Release|Win32
+		{89ABCDEF-0000-0000-0000-000000000007}.Debug|Win32.ActiveCfg = Debug|Win32
+		{89ABCDEF-0000-0000-0000-000000000007}.Debug|Win32.Build.0 = Debug|Win32
+		{89ABCDEF-0000-0000-0000-000000000007}.Release|Win32.ActiveCfg = Release|Win32
+		{89ABCDEF-0000-0000-0000-000000000007}.Release|Win32.Build.0 = Release|Win32
+		{89ABCDEF-0000-0000-0000-000000000008}.Debug|Win32.ActiveCfg = Debug|Win32
+		{89ABCDEF-0000-0000-0000-000000000008}.Debug|Win32.Build.0 = Debug|Win32
+		{89ABCDEF-0000-0000-0000-000000000008}.Release|Win32.ActiveCfg = Release|Win32
+		{89ABCDEF-0000-0000-0000-000000000008}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
