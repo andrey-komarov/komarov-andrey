@@ -5,6 +5,10 @@
 #include "list_utils.h"
 #include "subtract.h"
 #include "multiply.h"
+#include "divide_by_short.h"
+#include "less.h"
+#include "equals.h"
+#include "divide.h"
 
 using namespace std;
 
@@ -16,7 +20,7 @@ ostream& operator<<(ostream& out, EmptyList)
 template<digit_t A, typename T>
 ostream& operator<<(ostream& out, L<A, T> a)
 {
-	out << a.Head << " " << T();
+	out << a.Head << T();
 	return out;
 }
 
@@ -28,13 +32,6 @@ int main()
 	typedef L<999, EmptyList> list3;
 	typedef L<2, L<5, EmptyList> > list5;
 	typedef L<1, L<4, EmptyList> > list6;
-	cout << ADD<list, list2>::type() << "\n";
-	cout << SUBTRACT<list, list2>::type() << "\n";
-	cout << SUBTRACT<list, list4>::type() << "\n";
-	cout << SUBTRACT<list, list>::type() << "\n";
-	cout << MULTIPLY<list, list4>::type() << "\n";
-	cout << MULTIPLY<list5, list6>::type() << "\n";
-	//~ cout << REVERSE<list>::type() << "\n";
-	//~ cout << APPEND<list2, 132>::type() << "\n";
-	//~ cout << ADD<list, list2>::type() << "\n";
+	typedef L<2, EmptyList> list7;
+	cout << DIVIDE<list, list5>::type() << "\n";
 }
