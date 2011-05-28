@@ -1,0 +1,9 @@
+x:\evaluator\export\problem4.1\normalize_negative.h(26): error C2059: syntax error : ')' [X:\evaluator\export\problem4.1\problem4.1.vcxproj]
+x:\evaluator\export\problem4.1\normalize_negative.h(26): error C2059: syntax error : '}' [X:\evaluator\export\problem4.1\problem4.1.vcxproj]
+x:\evaluator\export\problem4.1\normalize_negative.h(26): error C2143: syntax error : missing ',' before ')' [X:\evaluator\export\problem4.1\problem4.1.vcxproj]
+x:\evaluator\export\problem4.1\normalize_negative.h(31): error C2976: 'NORMALIZE_NEGATIVE' : too few template arguments [X:\evaluator\export\problem4.1\problem4.1.vcxproj]
+x:\evaluator\export\problem4.1\normalize_negative.h(32): error C2143: syntax error : missing ';' before '}' [X:\evaluator\export\problem4.1\problem4.1.vcxproj]
+x:\evaluator\export\problem4.1\normalize_negative.h(26): fatal error C1903: unable to recover from previous error(s); stopping compilation [X:\evaluator\export\problem4.1\problem4.1.vcxproj]
+
+[Generated at May 28, 2011 1:41:04 PM GMT+03:00]
+
