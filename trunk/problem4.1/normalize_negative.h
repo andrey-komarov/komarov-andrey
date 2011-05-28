@@ -3,7 +3,11 @@
 
 #include "list.h"
 
-// TODO!!!!
+template<int A, int B>
+struct LESS_INT
+{
+	enum {value = A < B};
+};
 
 template<digit_t carry, typename T>
 struct NORMALIZE_NEGATIVE
@@ -23,9 +27,9 @@ struct NORMALIZE_NEGATIVE<0, T>
 {
 	typedef 
 	L<
-		(T::Head < 0) ? (T::Head + BASE) : T::Head,
+		LESS_INT<T::Head, 0>::value ? (T::Head + BASE) : T::Head,
 		typename NORMALIZE_NEGATIVE<
-			T::Head < 0 ? -1 : 0,
+			LESS_INT<T::Head, 0>::value ? -1 : 0,
 			typename T::Tail
 		>::type
 	> type;
