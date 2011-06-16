@@ -1,4 +1,4 @@
-TIME_LIMIT_EXCEEDED
+Accepted
 
-[Generated at June 6, 2011 9:53:38 PM GMT+03:00]
+[Generated at June 16, 2011 11:49:37 PM GMT+03:00]
 
