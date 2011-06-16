@@ -242,13 +242,13 @@ big_int& big_int::operator*=(const big_int& b)
     container res = container(l);
     for (size_t i = 0; i < l; i++)
         res[i] = 0;
-    int iterations_before_update = std::numeric_limits<digit_t>::max() / (base * base);
+    long long iterations_before_update = std::numeric_limits<digit_t>::max() / (base * base);
     for (size_t i = 0; i < len; i++)
     {
         for (size_t j = 0; j < b.len; j++)
             res[i + j] += a[i] * b.a[j];
         size_t tmp = l;
-        if (i % iterations_before_update == 0)
+        if (static_cast<long long>(i) % iterations_before_update == 0)
             normalize(res, tmp);
     }
     big_int a(res, l);

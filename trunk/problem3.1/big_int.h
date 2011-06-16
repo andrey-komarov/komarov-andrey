@@ -14,7 +14,7 @@ struct big_int
 {
     big_int(int = 0);
     big_int(const big_int&);
-	big_int(std::string);
+    big_int(std::string);
     void swap(big_int&);
     bool operator==(const big_int&) const;
     bool operator>(const big_int&) const;
@@ -39,9 +39,9 @@ private:
     big_int operator<<(const size_t) const;
 
     friend std::istream& operator>>(std::istream&, big_int&);
-	friend std::ostream& operator<<(std::ostream&, const big_int&);
-	friend big_int operator-(big_int);
-	friend big_int abs(big_int a);
+    friend std::ostream& operator<<(std::ostream&, const big_int&);
+    friend big_int operator-(big_int);
+    friend big_int abs(big_int a);
 };
 
 big_int abs(big_int a);
