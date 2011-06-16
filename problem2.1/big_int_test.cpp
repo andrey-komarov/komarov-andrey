@@ -189,6 +189,13 @@ BOOST_AUTO_TEST_CASE( arithmetic_test )
                     BOOST_CHECK_EQUAL(a5, a % b + c);
                 }
 
+                BOOST_CHECK_EQUAL(a - b, -(b - a));
+                BOOST_CHECK_EQUAL(a + (-b), a - b);
+
+                BOOST_CHECK_EQUAL( -a * b, a * -b);
+                BOOST_CHECK_EQUAL( -a * b, -(a * b));
+                BOOST_CHECK_EQUAL( -a * -b, a * b);
+
                 BOOST_CHECK(a <= abs(a));
                 BOOST_CHECK(-a <= abs(a));
                 BOOST_CHECK((abs(a) == a) || (abs(a) == -a));
