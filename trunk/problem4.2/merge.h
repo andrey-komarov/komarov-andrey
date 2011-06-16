@@ -6,7 +6,7 @@
 template<int A, int B>
 struct LESS
 {
-	enum {value = A < B};
+	static const bool value = A < B;
 };
 
 template<bool C, typename A, typename B>
@@ -30,8 +30,8 @@ template<typename L1, typename L2>
 struct MERGE
 {
 	typedef	typename IF<LESS<L1::Head, L2::Head>::value,
-		L<L1::Head, typename MERGE<typename L1::Tail, L2>::type>,
-		L<L2::Head, typename MERGE<L1, typename L2::Tail>::type>		
+		LIST<L1::Head, typename MERGE<typename L1::Tail, L2>::type>,
+		LIST<L2::Head, typename MERGE<L1, typename L2::Tail>::type>		
 	>::type type;
 };
 

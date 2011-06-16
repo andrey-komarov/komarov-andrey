@@ -4,9 +4,9 @@
 struct EmptyList{};
 
 template<int A, typename T>
-struct L{
+struct LIST{
 	typedef T Tail;
-	enum {Head = A};
+	static const int Head = A;
 };
 
 #endif /* listH */

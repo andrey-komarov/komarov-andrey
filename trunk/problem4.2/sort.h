@@ -22,9 +22,9 @@ struct SORT<EmptyList>
 };
 
 template<int A>
-struct SORT<L<A, EmptyList> >
+struct SORT<LIST<A, EmptyList> >
 {
-	typedef L<A, EmptyList> type;
+	typedef LIST<A, EmptyList> type;
 };
 
 #endif /* sortH */

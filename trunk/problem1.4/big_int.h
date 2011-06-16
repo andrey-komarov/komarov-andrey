@@ -6,12 +6,13 @@
 #include <iostream>
 #include <algorithm>
 #include <stdexcept>
+#include <limits>
 
 #include "container.h"
 
 struct big_int
 {
-    big_int(digit_t = 0);
+    big_int(int = 0);
     big_int(const big_int&);
 	big_int(std::string);
     void swap(big_int&);
