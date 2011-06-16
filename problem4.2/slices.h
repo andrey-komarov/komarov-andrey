@@ -6,7 +6,7 @@
 template<int CNT, typename T>
 struct PREFIX
 {
-	typedef L<T::Head, typename PREFIX<CNT - 1, typename T::Tail>::type> type;
+	typedef LIST<T::Head, typename PREFIX<CNT - 1, typename T::Tail>::type> type;
 };
 
 template<typename T>
