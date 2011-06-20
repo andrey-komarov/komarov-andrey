@@ -3,12 +3,6 @@
 
 #include "list.h"
 
-template<int A, int B>
-struct LESS
-{
-	static const bool value = A < B;
-};
-
 template<bool C, typename A, typename B>
 struct IF
 {
@@ -29,8 +23,9 @@ struct IF<false, A, B>
 template<typename L1, typename L2>
 struct MERGE
 {
-	typedef	typename IF<LESS<L1::Head, L2::Head>::value,
-		LIST<L1::Head, typename MERGE<typename L1::Tail, L2>::type>,
+	typedef	typename IF<
+        (L1::Head < L2::Head),
+        LIST<L1::Head, typename MERGE<typename L1::Tail, L2>::type>,
 		LIST<L2::Head, typename MERGE<L1, typename L2::Tail>::type>		
 	>::type type;
 };
