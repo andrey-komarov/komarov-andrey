@@ -15,7 +15,6 @@
     <ClInclude Include="calculator.h" />
     <ClInclude Include="container.h" />
     <ClInclude Include="function.h" />
-    <ClInclude Include="operator.h" />
     <ClInclude Include="utils.hpp" />
     
   </ItemGroup>
