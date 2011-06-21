@@ -1,5 +1,4 @@
-#ifndef containerCPP
-#define containerCPP
+#pragma warning(disable: 4100 4127 4512 4503) 
 
 #include "container.h"
 
@@ -103,5 +102,3 @@ digit_t container::operator[] (size_t pos) const
         return 0;
     return size_ == 1 ? digit_ : digits_[pos];
 }
-
-#endif

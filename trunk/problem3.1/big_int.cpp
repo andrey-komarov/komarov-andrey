@@ -113,7 +113,7 @@ std::istream& operator>>(std::istream& is, big_int& val)
     if (is.peek() == '+')
         is.get();
     else if (is.peek() == '-')
-        s.push_back(is.get());
+        s.push_back(static_cast<char>(is.get()));
     
     if (is.eof()) 
     {
@@ -128,7 +128,7 @@ std::istream& operator>>(std::istream& is, big_int& val)
     }
     
     while (!is.eof() && isdigit(is.peek()))
-        s.push_back(is.get());
+        s.push_back(static_cast<char>(is.get()));
     
     val = big_int(s);
     return is;
