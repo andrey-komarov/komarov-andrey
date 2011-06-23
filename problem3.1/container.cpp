@@ -1,4 +1,4 @@
-#pragma warning(disable: 4100 4127 4512 4503) 
+//#pragma warning(disable: 4100 4127 4512 4503) 
 
 #include "container.h"
 
