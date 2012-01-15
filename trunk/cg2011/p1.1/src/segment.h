@@ -2,6 +2,7 @@
 #define segmentH
 
 #include "point.h"
+#include <ostream>
 
 struct segment
 {
@@ -9,5 +10,7 @@ struct segment
 	segment(const point&, const point&);
 	point a, b;
 };
+
+std::ostream& operator<<(std::ostream&, const segment&);
 
 #endif
