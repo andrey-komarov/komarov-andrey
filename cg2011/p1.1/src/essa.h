@@ -5,8 +5,8 @@
 template<int n>
 Sign signum(double* values)
 {
-	priority_queue<n, double> a;
-	priority_queue<n, double> b;
+	priority_queue<2 * n, double> a;
+	priority_queue<2 * n, double> b;
 	for (size_t i = 0; i < n; i++)
 	{
 		double &val = values[i];
