@@ -1,6 +1,8 @@
 #ifndef pointH
 #define pointH
 
+#include <ostream>
+
 struct point
 {
 	point();
@@ -8,5 +10,7 @@ struct point
 
 	double x, y;
 };
+
+std::ostream& operator<<(std::ostream&, const point&);
 
 #endif
