@@ -54,8 +54,9 @@ int main()
 	using std::cout;
 	using std::cerr;
 
-   
-	int n, t, seed;
+	//freopen("x", "r", stdin);
+
+	int n, t, seed = 0;
 	cin >> n >> t;
 	RandomInput generator(0);
 	if (t == 1)
@@ -64,12 +65,13 @@ int main()
 		generator = RandomInput(seed);
 	}
 	std::vector<bool> intersections(n);
-    
 	for (int i = 0; i < n; i++)
 	{
 		point p[4];
 		if (seed == 0)
+		{
 			cin >> p[0].x >> p[0].y >> p[1].x >> p[1].y >> p[2].x >> p[2].y >> p[3].x >> p[3].y;
+		}
 		else 
 		{
 			p[0].x = generator.get_double();
@@ -83,6 +85,7 @@ int main()
 		}
 		segment s1(p[0], p[1]), s2(p[2], p[3]);
 		intersections[i] = intersects(s1, s2);
+//		cerr << intersections[i];
 	}
 	cout << get_result(intersections); 
 	return 0;
