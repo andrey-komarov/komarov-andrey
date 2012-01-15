@@ -1,12 +1,14 @@
 #include "enum.h"
-#include "priority_queue.h"
+//#include "priority_queue.h"
+#include <queue>
+using std::priority_queue;
 #include "double_utils.h"
 
 template<int n>
 Sign signum(double* values)
 {
-	priority_queue<2 * n, double> a;
-	priority_queue<2 * n, double> b;
+	priority_queue</*2 * n,*/ double> a;
+	priority_queue</*2 * n,*/ double> b;
 	for (size_t i = 0; i < n; i++)
 	{
 		double &val = values[i];
@@ -25,8 +27,10 @@ Sign signum(double* values)
 			return LESS;
 		if (sz2 == 0)
 			return GREATER;
-		double a1 = a.pop();
-		double b1 = b.pop();
+		double a1 = a.top();
+		double b1 = b.top();
+		a.pop();
+		b.pop();
 		if (a1 == b1)
 			continue;
 		if (a1 > 2 * sz2 * b1)
