@@ -29,12 +29,38 @@ Sign orientation_epsilon(const segment& s, const point& p)
 	return EQUAL;
 }
 
+
+#include <boost/numeric/interval.hpp>
+Sign orientation_interval(const segment &s, const point &p)
+{
+    using namespace boost::numeric;
+    using namespace interval_lib;
+
+    typedef interval<double> Id;
+
+    Id det = (Id(s.b.x) - Id(s.a.x)) * (Id(p.y) - Id(s.a.y)) - (Id(s.b.y) - Id(s.a.y)) * (Id(p.x) - Id(s.a.x));
+    #ifdef DEBUG
+        //std::cerr << "Segment " << s << "  Point " << p << " det = " << det.lower() << " " << det.upper() << std::endl;
+    #endif
+    if (cergt(det, Id(0.0)))
+        return LEFT;
+    else if (cerlt(det, Id(0.0)))
+        return RIGHT;
+    else
+        return EQUAL;
+}
+
+
+
 #include "assert.h"
 Sign orientation(const segment& s, const point& p)
 {
 	Sign sign = orientation_epsilon(s, p);
-	if (sign == EQUAL)
-		return orientation_essa(s, p);
-	return sign;
+	if (sign != EQUAL)
+		return sign;
+	sign = orientation_interval(s, p);
+	if (sign != EQUAL)
+		return sign;	
+	return orientation_essa(s, p);
 }
 
