@@ -13,7 +13,7 @@ bool check_bbox_intersection(const segment& s1, const segment& s2)
 	double min2;
 	double max2;
 	if (s2.a.x < s2.b.x)
-		min2 = s2.a.x,	max2 = s2.b.x;
+		min2 = s2.a.x, max2 = s2.b.x;
 	else 
 		min2 = s2.b.x, max2 = s2.a.x;
 
