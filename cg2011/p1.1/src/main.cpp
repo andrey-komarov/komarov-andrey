@@ -1,6 +1,6 @@
 #include <iostream>
 #include <limits>
-#include <vector>
+//#include <vector>
 #include <string>
 #include <cstdio>
 #include <cstdlib>
@@ -36,7 +36,7 @@ class RandomInput
 };
 
 
-
+/*
 int get_result(std::vector<bool> const & intersects)
 {
 	int p = 1;
@@ -47,6 +47,7 @@ int get_result(std::vector<bool> const & intersects)
 	}
 	return res;
 }
+*/
 
 int main()
 {
@@ -64,8 +65,10 @@ int main()
 		cin >> seed;
 		generator = RandomInput(seed);
 	}
-	std::vector<bool> intersections(n);
-	for (int i = 0; i < n; i++)
+//	std::vector<bool> intersections(n);
+	int P = 1;
+	int res = 0;
+	for (int i = 0; i < n; i++, P *= 239)
 	{
 		point p[4];
 		if (seed == 0)
@@ -84,9 +87,9 @@ int main()
 			p[3].y = generator.get_double();
 		}
 		segment s1(p[0], p[1]), s2(p[2], p[3]);
-		intersections[i] = intersects(s1, s2);
-//		cerr << intersections[i];
+		if (intersects(s1, s2))
+			res += P;
 	}
-	cout << get_result(intersections); 
+	cout << res; 
 	return 0;
 }
