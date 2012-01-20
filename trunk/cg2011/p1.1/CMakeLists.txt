@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 2.6)
 
 project(segments_intersection)
 
-add_definitions(-Wall -W -O3 -Wno-sign-compare -std=c++0x)
+#add_definitions(-Wall -W -Wno-sign-compare -std=c++0x)
+add_definitions(-Wall -W -Ofast -ffast-math -msse -msse2 -msse3 -msse4 -msse4.1 -Wno-sign-compare -std=c++0x)
 link_libraries(boost_unit_test_framework)
 
 set(common_src ./src/double_utils.cpp ./src/double_utils.h ./src/enum.cpp ./src/enum.h ./src/essa.h ./src/intersection.cpp ./src/intersection.h ./src/orientation.cpp ./src/orientation.h ./src/point.cpp ./src/point.h ./src/priority_queue.h ./src/segment.h ./src/segment.cpp)
