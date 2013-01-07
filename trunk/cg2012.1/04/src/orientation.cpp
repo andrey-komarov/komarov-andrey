@@ -29,19 +29,6 @@ Sign orientation_epsilon(const segment& s, const point& p)
 	return EQUAL;
 }
 
-#include <gmpxx.h>
-Sign orientation_gmp(const segment& s, const point& p)
-{
-    mpq_class s1 = (s.b.x - (mpq_class)s.a.x) * (p.y - (mpq_class)s.a.y);
-    mpq_class s2 = (s.b.y - (mpq_class)s.a.y) * (p.x - (mpq_class)s.a.x);
-    mpq_class res = s1 - s2;
-    if (res > 0)
-        return LEFT;
-    if (res < 0)
-        return RIGHT;
-    return EQUAL;
-}
-
 #include "assert.h"
 Sign orientation(const segment& s, const point& p)
 {
