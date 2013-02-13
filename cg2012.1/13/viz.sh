@@ -1,9 +1,9 @@
 #!/bin/bash
 cmake .
 make main
-make testsgen
-./testsgen
-cp viz/* tests/*
+make testgen
+./testgen
+cp viz/* tests
 cp main tests
 pushd tests
 ./runall.sh

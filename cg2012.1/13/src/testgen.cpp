@@ -140,14 +140,11 @@ test fractal2(size_t depth, size_t n, double x, double y, double r, double dr = 
 
 test random_groups(size_t depth, size_t n, size_t m, double x, double y, double r, double dr = 3)
 {
-    double da = 2 * PI / n;
     if (depth == 1)
     {
         test res;
         for (auto i : range(m))
         {
-            double r2 = dist(gen) * r;
-            double a = dist(gen) * 2 * PI;
             double dx = dist(gen) * r;
             double dy = dist(gen) * r;
             res.push_back({x + dx, y + dy});
