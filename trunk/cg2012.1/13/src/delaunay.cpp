@@ -180,49 +180,6 @@ bool contains(const point& a, const point& b, const point& c)
 // No three points on same line yet...
 void insert(ptri& t, const point& p)
 {
-    for (int i = 0; i < 3; i++)
-    {
-        if (contains(t->e[i]->from, p, t->e[(i + 1) % 3]->from))
-        {
-            assert(t->e[i]->twin != nullptr);
-            ptri t2 = t->e[i]->twin->t;
-            int free1 = (i + 2) % 3;
-            int free2 = -1;
-            for (int j = 0; j < 3; j++)
-                if (t2->e[j]->from == t->e[i]->from)
-                    free2 = (j + 1) % 3;
-            assert (free2 != -1);
-            pedge right[2], left[2], up[2], down[2];
-            right[0] = new edge({p, t->e[free1]->from, nullptr, nullptr});
-            right[1] = new edge({t->e[free1]->from, p, right[0], nullptr});
-            right[0]->twin = right[1];
-            left[0] = new edge({p, t2->e[free2]->from, nullptr, nullptr});
-            left[1] = new edge({t2->e[free2]->from, p, left[0], nullptr});
-            left[0]->twin = left[1];
-            up[0] = new edge({p, t->e[(free1 + 1) % 3]->from, nullptr, nullptr});
-            up[1] = new edge({t->e[(free1 + 1) % 3]->from, p, up[0], nullptr});
-            up[0]->twin = up[1];
-            down[0] = new edge({p, t2->e[(free2 + 1) % 3]->from, nullptr, nullptr});
-            down[1] = new edge({t2->e[(free2 + 1) % 3]->from, p, down[0], nullptr});
-            down[0]->twin = down[1];
-            ptri ru = new tri({{t->e[free1], up[1], right[0]}, {nullptr, nullptr, nullptr}, true});
-            ptri lu = new tri({{t2->e[(free2 + 2) % 3], left[1], up[0]}, {nullptr, nullptr, nullptr}, true});
-            ptri rd = new tri({{t->e[(free1 + 2) % 3], right[1], down[0]}, {nullptr, nullptr, nullptr}, true});
-            ptri ld = new tri({{t2->e[free2], down[1], left[0]}, {nullptr, nullptr, nullptr}, true});
-            for (ptri t : {ru, lu, rd, ld})
-                for (int i = 0; i < 3; i++)
-                    t->e[i]->t = t;
-            t->alive = false;
-            t->down[0] = ru;
-            t->down[1] = rd;
-            t2->alive = false;
-            t2->down[0] = lu;
-            t2->down[1] = ld;
-            for (ptri t : {ru, rd, lu, ld})
-                flip(t);
-            return;
-        }
-    }
     pedge e[2][3];
     pedge te[3];
     for (int i = 0; i < 3; i++)
