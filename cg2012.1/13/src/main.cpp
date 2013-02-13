@@ -24,6 +24,11 @@ int main()
     }
     random_shuffle(a.begin(), a.end());
     auto b = triangulate(a);
+
+//    for (auto t : b)
+//        cout << t << "\n";
+//    return 0 ;
+
     cout << b.size() << "\n";
     for (auto t : b)
     {

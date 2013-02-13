@@ -9,6 +9,9 @@ using std::set;
 #include <memory>
 using std::shared_ptr;
 
+#include <cmath>
+using std::abs;
+
 #include <iostream>
 using namespace std;
 
@@ -208,7 +211,14 @@ void insert(ptri& t, const point& p)
 
 vector<triangle> triangulate(const vector<point>& p)
 {
-    triangle bound({-1e20, 1e20}, {0, -1e20}, {1e20, 1e20});
+    double mx = 0;
+    for (auto pp : p)
+    {
+        mx = max(mx, abs(pp.x));
+        mx = max(mx, abs(pp.y));
+    }
+    mx *= 8;
+    triangle bound({-mx, mx}, {0, -mx}, {mx, mx});
     pedge e1(new edge({bound.points[0], bound.points[1], nullptr, nullptr}));
     pedge e2(new edge({bound.points[1], bound.points[2], nullptr, nullptr}));
     pedge e3(new edge({bound.points[2], bound.points[0], nullptr, nullptr}));

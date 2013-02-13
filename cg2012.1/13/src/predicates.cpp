@@ -48,6 +48,52 @@ Sign turn(const point& a, const point& b, const point& c)
         return Sign::LEFT;
 }
 
+Sign incircleShewchuckOriginal(const point& a, const point& b, const point& c, const point& d)
+{
+  double adx, bdx, cdx, ady, bdy, cdy;
+  double bdxcdy, cdxbdy, cdxady, adxcdy, adxbdy, bdxady;
+  double alift, blift, clift;
+  double det;
+  double permanent, errbound;
+
+  adx = a.x - d.x;
+  bdx = b.x - d.x;
+  cdx = c.x - d.x;
+  ady = a.y - d.y;
+  bdy = b.y - d.y;
+  cdy = c.y - d.y;
+
+  bdxcdy = bdx * cdy;
+  cdxbdy = cdx * bdy;
+  alift = adx * adx + ady * ady;
+
+  cdxady = cdx * ady;
+  adxcdy = adx * cdy;
+  blift = bdx * bdx + bdy * bdy;
+
+  adxbdy = adx * bdy;
+  bdxady = bdx * ady;
+  clift = cdx * cdx + cdy * cdy;
+
+  det = alift * (bdxcdy - cdxbdy)
+      + blift * (cdxady - adxcdy)
+      + clift * (adxbdy - bdxady);
+
+  permanent = (abs(bdxcdy) + abs(cdxbdy)) * alift
+            + (abs(cdxady) + abs(adxcdy)) * blift
+            + (abs(adxbdy) + abs(bdxady)) * clift;
+  double epsilon = numeric_limits<double>::epsilon();
+  double iccerrboundA = (10.0 + 96.0 * epsilon) * epsilon;
+  errbound = iccerrboundA * permanent;
+  if (abs(det) < errbound)
+      return Sign::ON;
+  if (det > 0)
+      return Sign::INSIDE;
+  else
+      return Sign::OUTSIDE;
+}
+
+
 Sign incircleDouble(const point& a, const point& b, const point& c, const point& d)
 {
     double dx = d.x, dy = d.y;
@@ -60,7 +106,7 @@ Sign incircleDouble(const point& a, const point& b, const point& c, const point&
     double a12 = (bx * bx - dx * dx) + (by * by - dy * dy);
     double a20 = cx - dx, a21 = cy - dy;
     double a22 = (cx * cx - dx * dx) + (cy * cy - dy * dy);
-    double meps = numeric_limits<double>::epsilon() * 8; // don't know really 8 or not..
+    double meps = numeric_limits<double>::epsilon() * 16;
     double d1 = a00 * a11 * a22;
     double d2 = a01 * a12 * a20;
     double d3 = a02 * a10 * a21;
@@ -68,7 +114,8 @@ Sign incircleDouble(const point& a, const point& b, const point& c, const point&
     double d5 = a01 * a10 * a22;
     double d6 = a02 * a11 * a20;
     double det = d1 + d2 + d3 - d4 - d5 - d6;
-    double eps = meps * (abs(d1) + abs(d2) + abs(d3) + abs(d4) + abs(d5) + abs(d6));
+    double eps = abs(d1) + abs(d2) + abs(d3) + abs(d4) + abs(d5) + abs(d6);
+    eps *= meps;
     if (abs(det) < eps)
         return Sign::BOUND;
     else if (det > 0)
@@ -79,7 +126,8 @@ Sign incircleDouble(const point& a, const point& b, const point& c, const point&
 
 Sign incircle(const point& a, const point& b, const point& c, const point& d)
 {
-    Sign s = incircleDouble(a, b, c, d);
+    //Sign s = incircleDouble(a, b, c, d);
+    Sign s = incircleShewchuckOriginal(a, b, c, d);
     if (s != Sign::BOUND)
         return s;
     mpq_class dx = d.x, dy = d.y;
