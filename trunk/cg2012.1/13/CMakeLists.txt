@@ -10,3 +10,4 @@ set(common_src ./src/delaunay.cpp ./src/delaunay.h ./src/sign.cpp ./src/sign.h .
 MESSAGE("PROJECT_BINARY_DIR=${PROJECT_BINARY_DIR}")
 
 add_executable(main ./src/main.cpp ${common_src})
+add_executable(testgen ./src/testgen.cpp)
