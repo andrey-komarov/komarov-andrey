@@ -45,13 +45,14 @@ Sign intriangle(const point& p, const triangle& t)
 struct edge;
 typedef edge* pedge;
 struct tri;
-typedef tri* ptri;
+typedef tri* wptri;
+typedef shared_ptr<tri> ptri;
 
 struct edge
 {
     point from, to;
     pedge twin;
-    ptri t;
+    wptri t;
 };
 
 struct tri
@@ -61,7 +62,7 @@ struct tri
     bool alive;
 };
 
-triangle to3(const ptri& t)
+triangle to3(const wptri& t)
 {
     assert (t->e[0]->to == t->e[1]->from);
     assert (t->e[1]->to == t->e[2]->from);
@@ -69,7 +70,7 @@ triangle to3(const ptri& t)
     return {t->e[0]->from, t->e[1]->from, t->e[2]->from};
 }
 
-ptri descend(const ptri& t, const point& p)
+wptri descend(const wptri& t, const point& p)
 {
     bool allNulls = true;
     for (ptri tt : t->down)
@@ -77,8 +78,8 @@ ptri descend(const ptri& t, const point& p)
     if (allNulls)
         return t;
     for (ptri tt : t->down)
-        if (tt != nullptr && intriangle(p, to3(tt)) != Sign::OUTSIDE)
-            return descend(tt, p);
+        if (tt != nullptr && intriangle(p, to3(tt.get())) != Sign::OUTSIDE)
+            return descend(tt.get(), p);
     assert (false);
 }
 
@@ -87,8 +88,8 @@ bool tryFlip(pedge& e1)
     pedge e2 = e1->twin;
     if (e2 == nullptr)
         return false;
-    ptri t1 = e1->t;
-    ptri t2 = e2->t;
+    wptri t1(e1->t);
+    wptri t2(e2->t);
     int free1;
     int free2;
     for (int i = 0; i < 3; i++)
@@ -112,12 +113,12 @@ bool tryFlip(pedge& e1)
         pedge newE1 = new edge({t1->e[free1]->from, t2->e[free2]->from, nullptr, nullptr});
         pedge newE2 = new edge({t2->e[free2]->from, t1->e[free1]->from, newE1, nullptr});
         newE1->twin = newE2;
-        ptri newT1 = new tri({{t2->e[free2], t1->e[(free1 + 2) % 3], newE1}, {nullptr, nullptr, nullptr}, true});
-        ptri newT2 = new tri({{t1->e[free1], t2->e[(free2 + 2) % 3], newE2}, {nullptr, nullptr, nullptr}, true});
+        ptri newT1(new tri({{t2->e[free2], t1->e[(free1 + 2) % 3], newE1}, {nullptr, nullptr, nullptr}, true}));
+        ptri newT2(new tri({{t1->e[free1], t2->e[(free2 + 2) % 3], newE2}, {nullptr, nullptr, nullptr}, true}));
         for (int i = 0; i < 3; i++)
         {
-            newT1->e[i]->t = newT1;
-            newT2->e[i]->t = newT2;
+            newT1->e[i]->t = newT1.get();
+            newT2->e[i]->t = newT2.get();
         }
         for (auto t : {t1, t2})
         {
@@ -130,7 +131,7 @@ bool tryFlip(pedge& e1)
     return false;
 }
 
-void flip(ptri& t)
+void flip(wptri t)
 {
     if (!t->alive)
         return;
@@ -138,8 +139,8 @@ void flip(ptri& t)
     {
         if (tryFlip(e))
         {
-            ptri t1 = e->t->down[0];
-            ptri t2 = e->t->down[1];
+            wptri t1 = e->t->down[0].get();
+            wptri t2 = e->t->down[1].get();
             flip(t1);
             flip(t2);
             break;
@@ -147,7 +148,7 @@ void flip(ptri& t)
     }
 }
 
-void traverse(vector<triangle>& res, ptri t, const triangle& boundTri, set<ptri>& used)
+void traverse(vector<triangle>& res, const wptri& t, const triangle& boundTri, set<wptri>& used)
 {
     if (used.count(t))
         return;
@@ -165,7 +166,7 @@ void traverse(vector<triangle>& res, ptri t, const triangle& boundTri, set<ptri>
     }
     for (ptri tt : t->down)
         if (tt != nullptr)
-            traverse(res, tt, boundTri, used);
+            traverse(res, tt.get(), boundTri, used);
 }
 
 bool between(double a, double b, double c)
@@ -181,7 +182,7 @@ bool contains(const point& a, const point& b, const point& c)
 }
 
 // No three points on same line yet...
-void insert(ptri& t, const point& p)
+void insert(wptri& t, const point& p)
 {
     pedge e[2][3];
     pedge te[3];
@@ -198,15 +199,15 @@ void insert(ptri& t, const point& p)
     ptri tt[3];
     for (int i = 0; i < 3; i++)
     {
-        tt[i] = new tri({{te[i], e[0][(i + 1) % 3], e[1][i]}, {nullptr, nullptr, nullptr}, true});
+        tt[i] = static_cast<ptri>(new tri({{te[i], e[0][(i + 1) % 3], e[1][i]}, {nullptr, nullptr, nullptr}, true}));
         t->down[i] = tt[i];
     }
     for (int i = 0; i < 3; i++)
         for (int j = 0; j < 3; j++)
-            tt[i]->e[j]->t = tt[i];
+            tt[i]->e[j]->t = tt[i].get();
     t->alive = false;
     for (int i = 0; i < 3; i++)
-        flip(tt[i]);
+        flip(tt[i].get());
 }
 
 vector<triangle> triangulate(const vector<point>& p)
@@ -223,17 +224,17 @@ vector<triangle> triangulate(const vector<point>& p)
     pedge e2(new edge({bound.points[1], bound.points[2], nullptr, nullptr}));
     pedge e3(new edge({bound.points[2], bound.points[0], nullptr, nullptr}));
     ptri root(new tri({{e1, e2, e3}, {nullptr, nullptr, nullptr}, true}));
-    e1->t = root;
-    e2->t = root;
-    e3->t = root;
+    e1->t = root.get();
+    e2->t = root.get();
+    e3->t = root.get();
     for (point pp : p)
     {
         assert(intriangle(pp, bound) != Sign::OUTSIDE);
-        ptri t = descend(root, pp);
+        wptri t = descend(root.get(), pp);
         insert(t, pp);
     }
     vector<triangle> res;
-    set<ptri> used;
-    traverse(res, root, bound, used);
+    set<wptri> used;
+    traverse(res, root.get(), bound, used);
     return {res};
 }
