@@ -43,7 +43,8 @@ Sign intriangle(const point& p, const triangle& t)
 }
 
 struct edge;
-typedef edge* pedge;
+typedef edge* wpedge;
+typedef shared_ptr<edge> pedge;
 struct tri;
 typedef tri* wptri;
 typedef shared_ptr<tri> ptri;
@@ -51,7 +52,7 @@ typedef shared_ptr<tri> ptri;
 struct edge
 {
     point from, to;
-    pedge twin;
+    wpedge twin;
     wptri t;
 };
 
@@ -83,9 +84,9 @@ wptri descend(const wptri& t, const point& p)
     assert (false);
 }
 
-bool tryFlip(pedge& e1)
+bool tryFlip(wpedge e1)
 {
-    pedge e2 = e1->twin;
+    wpedge e2 = e1->twin;
     if (e2 == nullptr)
         return false;
     wptri t1(e1->t);
@@ -94,9 +95,9 @@ bool tryFlip(pedge& e1)
     int free2;
     for (int i = 0; i < 3; i++)
     {
-        if (t1->e[i] == e1)
+        if (t1->e[i].get() == e1)
             free1 = (i + 2) % 3;
-        if (t2->e[i] == e2)
+        if (t2->e[i].get() == e2)
             free2 = (i + 2) % 3;
     }
     point p1 = t1->e[(free1 + 1) % 3]->from;
@@ -110,9 +111,10 @@ bool tryFlip(pedge& e1)
     if (incircle(t1->e[0]->from, t1->e[1]->from, t1->e[2]->from, t2->e[free2]->from) == Sign::INSIDE
       ||incircle(t2->e[0]->from, t2->e[1]->from, t2->e[2]->from, t1->e[free1]->from) == Sign::INSIDE)
     {
-        pedge newE1 = new edge({t1->e[free1]->from, t2->e[free2]->from, nullptr, nullptr});
-        pedge newE2 = new edge({t2->e[free2]->from, t1->e[free1]->from, newE1, nullptr});
-        newE1->twin = newE2;
+        pedge newE1(new edge({t1->e[free1]->from, t2->e[free2]->from, nullptr, nullptr}));
+        pedge newE2(new edge({t2->e[free2]->from, t1->e[free1]->from, nullptr, nullptr}));
+        newE1->twin = newE2.get();
+        newE2->twin = newE1.get();
         ptri newT1(new tri({{t2->e[free2], t1->e[(free1 + 2) % 3], newE1}, {nullptr, nullptr, nullptr}, true}));
         ptri newT2(new tri({{t1->e[free1], t2->e[(free2 + 2) % 3], newE2}, {nullptr, nullptr, nullptr}, true}));
         for (int i = 0; i < 3; i++)
@@ -137,7 +139,7 @@ void flip(wptri t)
         return;
     for (pedge e : t->e)
     {
-        if (tryFlip(e))
+        if (tryFlip(e.get()))
         {
             wptri t1 = e->t->down[0].get();
             wptri t2 = e->t->down[1].get();
@@ -162,7 +164,7 @@ void traverse(vector<triangle>& res, const wptri& t, const triangle& boundTri, s
         if (!bound)
             res.push_back(to3(t));
         for (int i = 0; i < 3; i++)
-            assert(!tryFlip(t->e[i]));
+            assert(!tryFlip(t->e[i].get()));
     }
     for (ptri tt : t->down)
         if (tt != nullptr)
@@ -188,12 +190,13 @@ void insert(wptri& t, const point& p)
     pedge te[3];
     for (int i = 0; i < 3; i++)
     {
-        e[0][i] = new edge({t->e[i]->from, p, nullptr, nullptr});
-        e[1][i] = new edge({p, t->e[i]->from, e[0][i], nullptr});
-        e[0][i]->twin = e[1][i];
-        te[i] = new edge({t->e[i]->from, t->e[(i + 1) % 3]->from, t->e[i]->twin, nullptr});
+        e[0][i] = static_cast<pedge>(new edge({t->e[i]->from, p, nullptr, nullptr}));
+        e[1][i] = static_cast<pedge>(new edge({p, t->e[i]->from, nullptr, nullptr}));
+        e[0][i]->twin = e[1][i].get();
+        e[1][i]->twin = e[0][i].get();
+        te[i] = static_cast<pedge>(new edge({t->e[i]->from, t->e[(i + 1) % 3]->from, t->e[i]->twin, nullptr}));
         if (te[i]->twin != nullptr)
-            te[i]->twin->twin = te[i];
+            te[i]->twin->twin = te[i].get();
         t->e[i]->twin = nullptr;
     }
     ptri tt[3];
