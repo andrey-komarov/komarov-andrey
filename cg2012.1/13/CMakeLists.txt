@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
-project(segments_intersection)
+project(delaunay_triangulation)
 
 add_definitions(-Wall -O2 -Wno-sign-compare -std=c++0x)
 link_libraries(gmp gmpxx)
