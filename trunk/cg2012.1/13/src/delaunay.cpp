@@ -150,6 +150,15 @@ void flip(wptri t)
     }
 }
 
+void flip(wpedge e)
+{
+    if (tryFlip(e)) 
+    {
+        flip(e->t->down[0].get());
+        flip(e->t->down[1].get());
+    }
+}
+
 void traverse(vector<triangle>& res, const wptri& t, const triangle& boundTri, set<wptri>& used)
 {
     if (used.count(t))
@@ -210,7 +219,7 @@ void insert(wptri& t, const point& p)
             tt[i]->e[j]->t = tt[i].get();
     t->alive = false;
     for (int i = 0; i < 3; i++)
-        flip(tt[i].get());
+        flip(te[i].get());
 }
 
 vector<triangle> triangulate(const vector<point>& p)
