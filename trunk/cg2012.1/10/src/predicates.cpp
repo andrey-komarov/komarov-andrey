@@ -152,7 +152,26 @@ Sign incircle(const point& a, const point& b, const point& c, const point& d)
 
 Sign incircleDouble(const point& a, const point& b, const point& c)
 {
-    return Sign::ZERO; // TODO :(
+    double dx1 = c.x * c.x;
+    double dx2 = a.x * b.x;
+    double dx3 = c.x * a.x;
+    double dx4 = c.x * b.x;
+    double dy1 = c.y * c.y;
+    double dy2 = a.y * b.y;
+    double dy3 = c.y * a.y;
+    double dy4 = c.y * b.y;
+    double meps = numeric_limits<double>::epsilon() * 8;
+    double s = abs(dx1) + abs(dx2) + abs(dx3) + abs(dx4)
+             + abs(dy1) + abs(dy2) + abs(dy3) + abs(dy4);
+    double res = dx1 + dx2 - dx3 - dx4 
+               + dy1 + dy2 - dy3 - dy4;
+    double eps = meps * s;
+    if (abs(res) < eps)
+        return Sign::ZERO;
+    if (res > 0)
+        return Sign::OUTSIDE;
+    else
+        return Sign::INSIDE;
 }
 
 Sign incircle(const point& a, const point& b, const point& c)
