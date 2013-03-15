@@ -48,35 +48,24 @@ bool notin(const point& p, const circle& c)
         return incircle(c.p[0], c.p[1], c.p[2], p) == Sign::OUTSIDE;
 }
 
-template<typename Iter>
-circle rebuild2(Iter be, Iter en, const point& p, const point& q)
-{
-    circle c(p, q);
-    for (; be != en; be++)
-        if (notin(*be, c))
-            c = circle(p, q, *be);
-    return c;
-}
-
-template<typename Iter>
-circle rebuild(Iter be, Iter en, const point& p)
-{
-    random_shuffle(be, en);
-    circle c(*be, p);
-    Iter it = be;
-    it++;
-    for ( ; it != en; it++)
-        if (notin(*it, c))
-            c = rebuild2(be, it, *it, p);
-    return c;
-}
-
 circle minimalCoveringCircle(std::vector<point> p)
 {
     random_shuffle(p.begin(), p.end());
     circle c(p[0], p[1]);
+
     for (size_t i = 2; i < p.size(); i++)
         if (notin(p[i], c))
-            c = rebuild(p.begin(), p.begin() + i, p[i]);
+        {
+            random_shuffle(begin(p), begin(p) + i - 1);
+            c = circle(p[0], p[i]);
+            for (size_t j = 0; j < i; j++)
+                if (notin(p[j], c))
+                {
+                    c = circle(p[i], p[j]);
+                    for (size_t k = 0; k < j; k++)
+                        if (notin(p[k], c))
+                            c = circle(p[i], p[j], p[k]);
+                }
+        }
     return c;
 }
